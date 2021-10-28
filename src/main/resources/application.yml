@@ -1,4 +1,7 @@
 spring:
+  data:
+    rest:
+      detection-strategy: annotated
   datasource:
     url: jdbc:h2:mem:test_db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
     # url: jdbc:mysql://localhost:3306/user_db
@@ -21,7 +24,7 @@ spring:
           new_generator_mappings: false
 
 server:
-   port: 8080 # This is the default port anyway, but you can change it here
+   port: 7000 # This is the default port anyway, but you can change it here
 
 security:
   jwt:
