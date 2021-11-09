@@ -26,18 +26,6 @@ import returnevolved.dto.JsonResponse;
 @RestControllerAdvice
 public class GlobalExceptionHandlerController {
 
-  @Bean
-  public ErrorAttributes errorAttributes() {
-    // Hide exception field in the return object
-    return new DefaultErrorAttributes() {
-      @Override
-      public Map<String, Object> getErrorAttributes(WebRequest webRequest, ErrorAttributeOptions options) {
-        Map<String, Object> errorAttributes = super.getErrorAttributes(webRequest, options);
-        errorAttributes.remove("exception");
-        return errorAttributes;
-      }
-    };
-  }
 
   @ExceptionHandler(CustomException.class)
   @ResponseBody
@@ -71,7 +59,6 @@ public class GlobalExceptionHandlerController {
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   @ResponseBody
   public JsonResponse<Exception> handleNotReadable(HttpServletResponse res, HttpMessageNotReadableException e) {
-
     return new JsonResponse<>(false, e.getCause().getLocalizedMessage());
   }
 
