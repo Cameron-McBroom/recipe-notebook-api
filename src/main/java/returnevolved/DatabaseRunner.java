@@ -1,10 +1,12 @@
 package returnevolved;
 
 import org.springframework.stereotype.Component;
+import returnevolved.model.Difficulty;
+import returnevolved.model.Recipe;
 import returnevolved.model.Role;
 import returnevolved.model.User;
+import returnevolved.service.RecipeService;
 import returnevolved.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 
 import java.util.ArrayList;
@@ -15,9 +17,11 @@ public class DatabaseRunner implements CommandLineRunner {
 
 
     private UserService userService;
+    private RecipeService recipeService;
 
-    public DatabaseRunner(UserService userService) {
+    public DatabaseRunner(UserService userService, RecipeService recipeService) {
         this.userService = userService;
+        this.recipeService = recipeService;
     }
 
     @Override
@@ -35,6 +39,15 @@ public class DatabaseRunner implements CommandLineRunner {
         client.setPassword("client");
         client.setEmail("client@email.com");
         client.setRoles(new ArrayList<Role>(Arrays.asList(Role.ROLE_CLIENT)));
+
+        Recipe chickenCurry = Recipe.builder()
+                .recipeTitle("ChickenCurry")
+                .recipeStory("This was a nice curry that my father used to make when I was a kid.")
+                .difficulty(Difficulty.MODERATE)
+                .build();
+
+        recipeService.saveRecipe(chickenCurry);
+
 
         userService.signup(client);
     }

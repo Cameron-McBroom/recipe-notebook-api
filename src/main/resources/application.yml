@@ -3,10 +3,10 @@ spring:
     rest:
       detection-strategy: annotated
   datasource:
-    url: jdbc:h2:mem:test_db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-    # url: jdbc:mysql://localhost:3306/user_db
-    username: root
-    password: root
+#    url: jdbc:h2:mem:test_db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    url: jdbc:postgresql://localhost:5432/recipenotebookdb
+    username: client
+    password: client
   tomcat:
     max-wait: 20000
     max-active: 50
@@ -17,8 +17,8 @@ spring:
       ddl-auto: create-drop
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.H2Dialect
-        # dialect: org.hibernate.dialect.MySQL8Dialect
+#        dialect: org.hibernate.dialect.H2Dialect
+        dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
         id:
           new_generator_mappings: false
