@@ -34,7 +34,6 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         Authentication auth = jwtTokenProvider.getAuthentication(token);
         SecurityContextHolder.getContext().setAuthentication(auth);
       }
-      filterChain.doFilter(httpServletRequest, httpServletResponse);
     } catch (CustomException ex) {
       //this is very important, since it guarantees the user is not authenticated at all
       SecurityContextHolder.clearContext();
@@ -44,6 +43,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
       httpServletResponse.getWriter().write(new ObjectMapper().writeValueAsString(response));
     }
 
+    filterChain.doFilter(httpServletRequest, httpServletResponse);
 
   }
 

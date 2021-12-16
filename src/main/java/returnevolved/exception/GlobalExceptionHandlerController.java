@@ -27,12 +27,12 @@ import returnevolved.dto.JsonResponse;
 public class GlobalExceptionHandlerController {
 
 
-  @ExceptionHandler(CustomException.class)
-  @ResponseBody
-  public JsonResponse<CustomException> handleCustomException(HttpServletResponse res, CustomException ex) {
-    res.setStatus(ex.getHttpStatus().value());
-    return new JsonResponse<>(false, ex.getLocalizedMessage());
-  }
+//  @ExceptionHandler(CustomException.class)
+//  @ResponseBody
+//  public JsonResponse<CustomException> handleCustomException(HttpServletResponse res, CustomException ex) {
+//    res.setStatus(ex.getHttpStatus().value());
+//    return new JsonResponse<>(false, ex.getLocalizedMessage());
+//  }
 
   @ExceptionHandler(MethodArgumentNotValidException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)

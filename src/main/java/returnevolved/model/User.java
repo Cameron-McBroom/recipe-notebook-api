@@ -13,8 +13,9 @@ import javax.validation.constraints.Size;
 public class User {
 
   @Id
-  @GeneratedValue
-  private Long id;
+  @GeneratedValue(generator = "uuid2")
+  @GenericGenerator(name="uuid2", strategy = "uuid2")
+  private UUID id;
 
   @Size(min = 4, max = 255, message = "Minimum username length: 4 characters")
   @Column(unique = true, nullable = false)

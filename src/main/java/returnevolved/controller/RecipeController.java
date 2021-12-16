@@ -39,6 +39,8 @@ public class RecipeController {
         var user = (UserDetails) authentication.getPrincipal();
 
         var recipes = recipeService.getRecipesForUser(user.getUsername());
+
+        return new JsonResponse<>(recipes);
     }
 
 

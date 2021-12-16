@@ -20,6 +20,7 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.annotations.Authorization;
+import returnevolved.dto.LoginDto;
 import returnevolved.dto.UserDtoReq;
 import returnevolved.dto.UserDtoRes;
 import returnevolved.model.User;
@@ -41,10 +42,8 @@ public class UserController {
   @ApiResponses(value = {//
       @ApiResponse(code = 400, message = "Something went wrong"), //
       @ApiResponse(code = 422, message = "Invalid username/password supplied")})
-  public String login(//
-      @ApiParam("Username") @RequestParam String username, //
-      @ApiParam("Password") @RequestParam String password) {
-    return userService.signin(username, password);
+  public String login(@RequestBody LoginDto loginDto) {
+    return userService.signin(loginDto.getUsername(), loginDto.getPassword());
   }
 
   @PostMapping("/signup")

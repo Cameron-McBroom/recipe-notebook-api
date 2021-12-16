@@ -24,7 +24,7 @@ public class RecipeService {
     }
 
     public List<Recipe> getRecipesForUser(String username) {
-
+       return recipeRepository.findByUser_Username(username);
     }
 
     public Recipe saveRecipe(Recipe recipeToSave) {

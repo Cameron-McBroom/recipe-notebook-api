@@ -10,6 +10,10 @@ public interface RecipeRepository extends CrudRepository<Recipe, UUID> {
 
     List<Recipe> findAll();
 
-    List<Recipe> findRecipeBy
+    List<Recipe> findAllByUserId(UUID userId);
+
+    List<Recipe> findByCategories_Id(UUID category);
+
+    List<Recipe> findByUser_Username(String username);
 
 }
