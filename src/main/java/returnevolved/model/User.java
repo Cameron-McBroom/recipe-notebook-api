@@ -33,6 +33,18 @@ public class User {
   @OneToMany
   private List<Recipe> recipes;
 
+  public User() {
+  }
+
+  public User(UUID id, String username, String email, String password, List<Role> roles, List<Recipe> recipes) {
+    this.id = id;
+    this.username = username;
+    this.email = email;
+    this.password = password;
+    this.roles = roles;
+    this.recipes = recipes;
+  }
+
   public UUID getId() {
     return id;
   }
@@ -73,4 +85,23 @@ public class User {
     this.roles = roles;
   }
 
+  public List<Recipe> getRecipes() {
+    return recipes;
+  }
+
+  public void setRecipes(List<Recipe> recipes) {
+    this.recipes = recipes;
+  }
+
+  @Override
+  public String toString() {
+    return "User{" +
+            "id=" + id +
+            ", username='" + username + '\'' +
+            ", email='" + email + '\'' +
+            ", password='" + password + '\'' +
+            ", roles=" + roles +
+            ", recipes=" + recipes.size() +
+            '}';
+  }
 }

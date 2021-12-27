@@ -15,18 +15,7 @@ public class RecipeDto {
     private Difficulty difficulty;
     private List<Category> categories;
 
-    private RecipeDto() {}
-
-    public static RecipeDto make(Recipe recipe) {
-        var dto = new RecipeDto();
-        dto.id = recipe.getId();
-        dto.recipeTitle = recipe.getRecipeTitle();
-        dto.recipeNotes = recipe.getNotes();
-        dto.ingredients = recipe.getIngredients();
-        dto.instructionSteps = recipe.getInstructionSteps();
-        dto.difficulty = recipe.getDifficulty();
-        dto.categories = recipe.getCategories();
-        return dto;
+    public RecipeDto() {
     }
 
     public UUID getId() {

@@ -5,16 +5,19 @@ import java.util.List;
 import io.swagger.annotations.ApiModelProperty;
 import returnevolved.model.Role;
 
+import javax.validation.constraints.NotNull;
+
 public class UserDtoReq {
   
-  @ApiModelProperty(position = 0)
   private String username;
-  @ApiModelProperty(position = 1)
   private String email;
-  @ApiModelProperty(position = 2)
   private String password;
-  @ApiModelProperty(position = 3)
+
+  @NotNull
   List<Role> roles;
+
+  public UserDtoReq() {
+  }
 
   public String getUsername() {
     return username;
@@ -47,5 +50,4 @@ public class UserDtoReq {
   public void setRoles(List<Role> roles) {
     this.roles = roles;
   }
-
 }

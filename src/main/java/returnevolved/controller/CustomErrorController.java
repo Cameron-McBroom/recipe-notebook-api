@@ -22,13 +22,23 @@ public class CustomErrorController implements ErrorController {
         var statusIsNotFound = (response.getStatus() == HttpServletResponse.SC_NOT_FOUND);
 
         if (statusIsNotFound) {
-            throw new CustomException("No resource found at at location: " + reqUri, HttpStatus.NOT_FOUND); // or your REST 404 blabla...
+            throw CustomException.status(HttpStatus.NOT_FOUND)
+                    .error("resource-not-found")
+                    .message("No resource found at location: " + reqUri)
+                    .build();
         }
         else if (response.getStatus() == HttpServletResponse.SC_UNAUTHORIZED) {
-            throw new CustomException("You need to log in first", HttpStatus.UNAUTHORIZED);
+            throw CustomException.status(HttpStatus.UNAUTHORIZED)
+                    .error("unauthorised")
+                    .message("You need to login to access " + reqUri)
+                    .build();
         }
         else {
-            throw new CustomException(e.getMessage(), HttpStatus.BAD_REQUEST);
+            throw CustomException.status(HttpStatus.BAD_REQUEST)
+                    .error("bad-request")
+                    .message(e.getLocalizedMessage())
+                    .detail(e.getMessage())
+                    .build();
         }
     }
 }

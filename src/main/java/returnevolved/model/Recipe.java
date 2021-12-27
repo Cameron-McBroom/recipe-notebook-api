@@ -41,17 +41,20 @@ public class Recipe {
     protected Recipe() {
     }
 
-    private Recipe(Builder builder) {
-        recipeTitle = builder.recipeTitle;
-        recipeStory = builder.recipeStory;
-        ingredients = builder.ingredients;
-        notes = builder.notes;
-        difficulty = builder.difficulty;
-        categories = builder.categories;
-    }
-
     public UUID getId() {
         return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public String getRecipeTitle() {
+        return recipeTitle;
+    }
+
+    public void setRecipeTitle(String recipeTitle) {
+        this.recipeTitle = recipeTitle;
     }
 
     public String getRecipeStory() {
@@ -78,6 +81,14 @@ public class Recipe {
         this.ingredients = ingredients;
     }
 
+    public List<InstructionStep> getInstructionSteps() {
+        return instructionSteps;
+    }
+
+    public void setInstructionSteps(List<InstructionStep> instructionSteps) {
+        this.instructionSteps = instructionSteps;
+    }
+
     public Difficulty getDifficulty() {
         return difficulty;
     }
@@ -94,20 +105,21 @@ public class Recipe {
         this.categories = categories;
     }
 
-    public String getRecipeTitle() {
-        return recipeTitle;
-    }
-
-    public void setRecipeTitle(String recipeTitle) {
-        this.recipeTitle = recipeTitle;
-    }
-
-    public List<InstructionStep> getInstructionSteps() {
-        return instructionSteps;
-    }
-
     public User getUser() {
         return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    private Recipe(Builder builder) {
+        recipeTitle = builder.recipeTitle;
+        recipeStory = builder.recipeStory;
+        ingredients = builder.ingredients;
+        notes = builder.notes;
+        difficulty = builder.difficulty;
+        categories = builder.categories;
     }
 
     public static RecipeTitle builder() {
@@ -183,4 +195,18 @@ public class Recipe {
         }
     }
 
+    @Override
+    public String toString() {
+        return "Recipe{" +
+                "id=" + id +
+                ", recipeTitle='" + recipeTitle + '\'' +
+                ", recipeStory='" + recipeStory + '\'' +
+                ", notes=" + notes.size() +
+                ", ingredients=" + ingredients.size() +
+                ", instructionSteps=" + instructionSteps.size() +
+                ", difficulty=" + difficulty +
+                ", categories=" + categories.size() +
+                ", user=" + user.getId() +
+                '}';
+    }
 }

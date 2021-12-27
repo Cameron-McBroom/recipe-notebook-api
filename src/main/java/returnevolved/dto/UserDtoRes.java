@@ -1,22 +1,33 @@
 package returnevolved.dto;
 
 import java.util.List;
+import java.util.UUID;
 
-import io.swagger.annotations.ApiModelProperty;
 import returnevolved.model.Role;
+
 
 public class UserDtoRes {
 
-  private Integer id;
+  private UUID id;
   private String username;
   private String email;
   List<Role> roles;
 
-  public Integer getId() {
+  public UserDtoRes() {
+  }
+
+  public UserDtoRes(UUID id, String username, String email, List<Role> roles) {
+    this.id = id;
+    this.username = username;
+    this.email = email;
+    this.roles = roles;
+  }
+
+  public UUID getId() {
     return id;
   }
 
-  public void setId(Integer id) {
+  public void setId(UUID id) {
     this.id = id;
   }
 
@@ -43,5 +54,4 @@ public class UserDtoRes {
   public void setRoles(List<Role> roles) {
     this.roles = roles;
   }
-
 }

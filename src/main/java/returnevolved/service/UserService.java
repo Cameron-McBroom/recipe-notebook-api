@@ -15,6 +15,8 @@ import returnevolved.model.User;
 import returnevolved.repository.UserRepository;
 import returnevolved.security.JwtTokenProvider;
 
+import java.util.Arrays;
+
 @Service
 public class UserService {
 
@@ -35,7 +37,11 @@ public class UserService {
       authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
       return jwtTokenProvider.createToken(username, userRepository.findByUsername(username).getRoles());
     } catch (AuthenticationException e) {
-      throw new CustomException("Invalid username/password supplied", HttpStatus.UNPROCESSABLE_ENTITY);
+      throw CustomException.status(HttpStatus.UNPROCESSABLE_ENTITY)
+              .error("bad-credentials")
+              .message("Invalid username/password supplied")
+              .detail(e.getMessage())
+              .build();
     }
   }
 
@@ -45,7 +51,10 @@ public class UserService {
       userRepository.save(user);
       return jwtTokenProvider.createToken(user.getUsername(), user.getRoles());
     } else {
-      throw new CustomException("Username is already in use", HttpStatus.UNPROCESSABLE_ENTITY);
+      throw CustomException.status(HttpStatus.UNPROCESSABLE_ENTITY)
+              .error("username-taken")
+              .message("Username is already in use")
+              .build();
     }
   }
 
@@ -56,7 +65,10 @@ public class UserService {
   public User search(String username) {
     User user = userRepository.findByUsername(username);
     if (user == null) {
-      throw new CustomException("The user doesn't exist", HttpStatus.NOT_FOUND);
+      throw CustomException.status(HttpStatus.UNPROCESSABLE_ENTITY)
+              .error("user-not-found")
+              .message("The user does not exist: " + username)
+              .build();
     }
     return user;
   }
