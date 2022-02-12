@@ -16,4 +16,6 @@ public interface RecipeRepository extends CrudRepository<Recipe, UUID> {
 
     List<Recipe> findByUser_Username(String username);
 
+    List<Recipe> findAllByPublicRecipeTrue();
+
 }

@@ -1,5 +1,6 @@
 package returnevolved.model;
 
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -8,6 +9,10 @@ import java.util.Set;
 import java.util.UUID;
 
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Recipe {
 
     @Id
@@ -15,198 +20,41 @@ public class Recipe {
     @GenericGenerator(name="uuid2", strategy = "uuid2")
     private UUID id;
 
+    /** The title of the recipe */
     private String recipeTitle;
 
+    /** A story about the recipe, such as where it's from family history etc */
     @Column(length = 1000)
     private String recipeStory;
 
+    /** Any notes the recipe might contain */
     @OneToMany
     private Set<RecipeNote> notes;
 
+    /** The ingredients required for the recipe */
     @OneToMany
     private Set<Ingredient> ingredients;
 
+    /** The instructions steps for the recipe */
     @OneToMany
     private List<InstructionStep> instructionSteps;
 
+    /** The difficulty of the recipe */
     @Enumerated(EnumType.STRING)
     private Difficulty difficulty;
 
+    /** The list of categories this recipe has */
     @ManyToMany
     private List<Category> categories;
 
+    /** The user who created and owns this recipe */
     @ManyToOne
     private User user;
 
-    protected Recipe() {
-    }
+    /** A public recipe can be viewed by any user */
+    private Boolean publicRecipe;
 
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getRecipeTitle() {
-        return recipeTitle;
-    }
-
-    public void setRecipeTitle(String recipeTitle) {
-        this.recipeTitle = recipeTitle;
-    }
-
-    public String getRecipeStory() {
-        return recipeStory;
-    }
-
-    public void setRecipeStory(String recipeStory) {
-        this.recipeStory = recipeStory;
-    }
-
-    public Set<RecipeNote> getNotes() {
-        return notes;
-    }
-
-    public void setNotes(Set<RecipeNote> notes) {
-        this.notes = notes;
-    }
-
-    public Set<Ingredient> getIngredients() {
-        return ingredients;
-    }
-
-    public void setIngredients(Set<Ingredient> ingredients) {
-        this.ingredients = ingredients;
-    }
-
-    public List<InstructionStep> getInstructionSteps() {
-        return instructionSteps;
-    }
-
-    public void setInstructionSteps(List<InstructionStep> instructionSteps) {
-        this.instructionSteps = instructionSteps;
-    }
-
-    public Difficulty getDifficulty() {
-        return difficulty;
-    }
-
-    public void setDifficulty(Difficulty difficulty) {
-        this.difficulty = difficulty;
-    }
-
-    public List<Category> getCategories() {
-        return categories;
-    }
-
-    public void setCategories(List<Category> categories) {
-        this.categories = categories;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    private Recipe(Builder builder) {
-        recipeTitle = builder.recipeTitle;
-        recipeStory = builder.recipeStory;
-        ingredients = builder.ingredients;
-        notes = builder.notes;
-        difficulty = builder.difficulty;
-        categories = builder.categories;
-    }
-
-    public static RecipeTitle builder() {
-        return new Builder();
-    }
-
-    public interface RecipeOwner {
-        RecipeTitle recipeOwner(User user);
-    }
-
-    public interface RecipeTitle {
-        Build recipeTitle(String title);
-    }
-
-    public interface Build {
-        Build categories(List<Category> categories);
-        Build difficulty(Difficulty difficulty);
-        Build recipeStory(String story);
-        Build ingredients(Set<Ingredient> ingredients);
-        Recipe build();
-    }
-
-    private static class Builder implements RecipeOwner, RecipeTitle, Build {
-
-        private User user;
-        private String recipeTitle;
-        private String recipeStory;
-        private Set<RecipeNote> notes;
-        private Set<Ingredient> ingredients;
-        private Difficulty difficulty;
-        private List<Category> categories;
-
-
-        @Override
-        public RecipeTitle recipeOwner(User user) {
-            this.user = user;
-            return this;
-        }
-
-        @Override
-        public Build recipeTitle(String title) {
-            this.recipeTitle = title;
-            return this;
-        }
-
-        @Override
-        public Build categories(List<Category> categories) {
-            this.categories = categories;
-            return this;
-        }
-
-        @Override
-        public Build difficulty(Difficulty difficulty) {
-            this.difficulty = difficulty;
-            return this;
-        }
-
-        @Override
-        public Build recipeStory(String story) {
-            this.recipeStory = story;
-            return this;
-        }
-
-        @Override
-        public Build ingredients(Set<Ingredient> ingredients) {
-            this.ingredients = ingredients;
-            return this;
-        }
-
-        @Override
-        public Recipe build() {
-            return new Recipe(this);
-        }
-    }
-
-    @Override
-    public String toString() {
-        return "Recipe{" +
-                "id=" + id +
-                ", recipeTitle='" + recipeTitle + '\'' +
-                ", recipeStory='" + recipeStory + '\'' +
-                ", notes=" + notes.size() +
-                ", ingredients=" + ingredients.size() +
-                ", instructionSteps=" + instructionSteps.size() +
-                ", difficulty=" + difficulty +
-                ", categories=" + categories.size() +
-                ", user=" + user.getId() +
-                '}';
-    }
+    /** Shared users are who has access to this recipe */
+    @ManyToMany
+    private Set<User> sharedUsers;
 }

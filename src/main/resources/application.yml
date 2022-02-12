@@ -4,7 +4,7 @@ spring:
       detection-strategy: annotated
   datasource:
 #    url: jdbc:h2:mem:test_db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-    url: jdbc:postgresql://localhost:5432/recipenotebookdb
+    url: jdbc:postgresql://localhost:5432/recipebookdb
     username: client
     password: client
   tomcat:
@@ -24,7 +24,7 @@ spring:
           new_generator_mappings: false
 
 server:
-   port: 7000 # This is the default port anyway, but you can change it here
+   port: 8090 # This is the default port anyway, but you can change it here
 
 security:
   jwt:

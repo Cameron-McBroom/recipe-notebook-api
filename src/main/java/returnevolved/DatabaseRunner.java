@@ -30,7 +30,7 @@ public class DatabaseRunner implements CommandLineRunner {
         admin.setUsername("admin");
         admin.setPassword("admin");
         admin.setEmail("admin@email.com");
-        admin.setRoles(new ArrayList<Role>(Arrays.asList(Role.ROLE_ADMIN)));
+        admin.setRoles(new ArrayList<>(Arrays.asList(Role.ROLE_ADMIN)));
 
         userService.signup(admin);
 
@@ -38,18 +38,24 @@ public class DatabaseRunner implements CommandLineRunner {
         client.setUsername("client");
         client.setPassword("client");
         client.setEmail("client@email.com");
-        client.setRoles(new ArrayList<Role>(Arrays.asList(Role.ROLE_CLIENT)));
+        client.setRoles(new ArrayList<>(Arrays.asList(Role.ROLE_CLIENT)));
 
-        Recipe chickenCurry = Recipe.builder()
-                .recipeTitle("ChickenCurry")
-                .recipeStory("This was a nice curry that my father used to make when I was a kid.")
+        userService.signup(client);
+
+        
+        Recipe recipe1 = Recipe
+                .builder()
+                .user(client)
+                .recipeTitle("Fruit Banana Pudding")
+                .recipeStory("This is a story all about fruit banana pudding and how good it is")
                 .difficulty(Difficulty.MODERATE)
                 .build();
 
-        recipeService.saveRecipe(chickenCurry);
+
+        recipeService.saveRecipe(recipe1);
 
 
-        userService.signup(client);
+
     }
 
 }
